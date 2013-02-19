@@ -34,6 +34,7 @@ Boston, MA 02111-1307 USA
 /* automatically generated wrapper code */
 
 #include "core.h"
+#include "try-catch.h"
 
 {{forallfn fn_name MPI_Pcontrol MPI_Init MPI_Finalize}}
 {{ret_type}} {{sub {{fn_name}} '^MPI_' NQJ_}}({{formals}})
@@ -61,7 +62,16 @@ Boston, MA 02111-1307 USA
 		  if (DBGCHECK(DBGLEVEL6))
 		    start_timer=get_time_ns();
 		  #endif
+int exception;
+TRY
+{
       res=(pnmpi_function_ptrs.pnmpi_int_{{fn_name}})[pnmpi_level]({{args}});
+}
+CATCH(exception)
+{
+          printf("PnMPI-ERROR (%i): Calling a wrapper in {{fn_name}} at level %i FROM %px\n", exception, pnmpi_level, &(Internal_X{{fn_name}}));
+}
+ETRY
 		  #ifdef DBGLEVEL6
 		  if (DBGCHECK(DBGLEVEL6))
 		    modules.module[pnmpi_level]->statstiming.{{fn_name}}+=get_time_ns()-start_timer;

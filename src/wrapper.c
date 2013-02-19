@@ -40,9 +40,13 @@ Boston, MA 02111-1307 USA
 
 #include <mpi.h>
 
-#include "pnmpi-config.h"
 #include "core.h"
+#include "pnmpi-config.h"
+#include "try-catch.h"
 
+#ifdef PNMPI_TRY_CATCH
+struct jmp_buf_wrap *ex_buf__;
+#endif
 
 /*-------------------------------------------------------------------*/
 /* timing and count variables for DBGLEVEL 5 and 6 */
@@ -274,8 +278,12 @@ static int PNMPI_Common_MPI_Init(int * _pnmpi_arg_0, char * * * _pnmpi_arg_1)
 {
   int returnVal;
 
-  pnmpi_PreInit();  /* this will never fail */
-  
+#ifdef PNMPI_TRY_CATCH
+  ex_buf__ = NULL;
+#endif
+
+  pnmpi_PreInit(); /* this will never fail */
+
   if (NOT_ACTIVATED(MPI_Init_ID))
     {
 #ifdef COMPILE_FOR_FORTRAN
