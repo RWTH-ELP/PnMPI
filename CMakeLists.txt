@@ -36,8 +36,9 @@ set(PNMPI_VERSION ${PNMPI_MAJOR_VERSION}.${PNMPI_MINOR_VERSION}.${PNMPI_PATCH_VE
 # TODO: is this just for services?  The basic interface is going to be MPI no matter what.
 set(PNMPI_LIB_INTERFACE_VERSION "1")
 
-# Set the module search path to include local modules.
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmakemodules;${CMAKE_MODULE_PATH}") #
+# Set the module search path to include local modules. Append to use system
+# modules by default.
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmakemodules")
 
 # Sensible defaults for the install prefix on Win32.  CMake defaults to /usr/local on UNIX.
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -62,6 +63,19 @@ find_package(AWK REQUIRED)
 find_package(PythonInterp 2.6 REQUIRED)
 if (NOT PYTHONINTERP_FOUND)
   message(FATAL_ERROR "PnMPI requires a Python interpreter to build.")
+endif()
+
+if (DEFINED ENV{MPICC})
+   set(MPI_C_COMPILER "$ENV{MPICC}" CACHE STRING "MPI C Compiler")
+endif()
+if (DEFINED ENV{MPICXX})
+   set(MPI_CXX_COMPILER "$ENV{MPICXX}" CACHE STRING "MPI C++ Compiler")
+endif()
+if (DEFINED ENV{MPIFC})
+   set(MPI_Fortran_COMPILER "$ENV{MPIFC}" CACHE STRING "MPI Fortran Compiler")
+endif()
+if (DEFINED ENV{MPIEXEC})
+   set(MPIEXEC "$ENV{MPIEXEC}" CACHE STRING "mpiexec Command")
 endif()
 
 find_package(MPI)
