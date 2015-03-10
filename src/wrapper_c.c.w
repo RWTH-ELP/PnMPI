@@ -62,7 +62,6 @@ Boston, MA 02111-1307 USA
 		  if (DBGCHECK(DBGLEVEL6))
 		    start_timer=get_time_ns();
 		  #endif
-int exception;
 TRY
 {
       res=(pnmpi_function_ptrs.pnmpi_int_{{fn_name}})[pnmpi_level]({{args}});
