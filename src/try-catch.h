@@ -95,7 +95,8 @@ extern struct jmp_buf_wrap *ex_buf__;
 #define CATCH(e) \
   }              \
   else           \
-  {
+  {              \
+    int e;
 #define FINALLY \
   }             \
   {
