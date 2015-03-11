@@ -92,11 +92,12 @@ extern struct jmp_buf_wrap *ex_buf__;
 #define TRY \
   if (1)    \
     {
+// code branch (catch) never entered:
 #define CATCH(e) \
   }              \
   else           \
   {              \
-    int e;
+    int e = 0;
 #define FINALLY \
   }             \
   {
