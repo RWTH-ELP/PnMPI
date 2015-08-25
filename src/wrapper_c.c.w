@@ -36,7 +36,7 @@ Boston, MA 02111-1307 USA
 #include "core.h"
 
 {{forallfn fn_name MPI_Pcontrol MPI_Init MPI_Init_thread MPI_Finalize}}
-{{ret_type}} {{sub {{fn_name}} '^MPI_' NQJ_}}({{formals}})
+{{ret_type}} {{sub {{sub {{fn_name}} '^MPI_' NQJ_}} '^ompt_' NQJ_ompt_}}({{formals}})
 {
   {{ret_type}} res;
   int start_level, pnmpi_level;
@@ -144,3 +144,4 @@ Boston, MA 02111-1307 USA
 }
 {{endforallfn}}
 
+int Pompt_initialize( ompt_interface_fn_t a, const char * b, int c) { return 0; }

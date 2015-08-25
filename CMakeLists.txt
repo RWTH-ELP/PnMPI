@@ -9,7 +9,7 @@
 # @date 05-22-2011
 cmake_minimum_required(VERSION 2.6)
 project(pnmpi C CXX)
-
+#add_definitions(-DDBGLEVEL=0x3F)
 # Workaround for this CMake issue: http://public.kitware.com/Bug/view.php?id=9220
 # Ensures that enable_language(Fortran OPTIONAL) works correctly.  Annoying.
 if (DEFINED CMAKE_Fortran_COMPILER AND CMAKE_Fortran_COMPILER MATCHES "^$")

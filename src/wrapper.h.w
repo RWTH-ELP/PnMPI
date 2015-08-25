@@ -40,7 +40,7 @@ double mpi_wtick_(void);
 double mpi_wtime_(void);
 
 {{forallfn fn_name MPI_Pcontrol}}
-{{ret_type}} {{sub {{fn_name}} '^MPI_' NQJ_}}({{formals}});
+{{ret_type}} {{sub {{sub {{fn_name}} '^MPI_' NQJ_}} '^ompt_' NQJ_ompt_}}({{formals}});
 {{endforallfn}}
 
 {{forallfn fn_name MPI_Pcontrol}}
@@ -57,7 +57,7 @@ double mpi_wtime_(void);
 {{endforallfn}}
 
 {{forallfn fn_name MPI_Pcontrol}}
-#define Internal_X{{fn_name}} {{sub {{fn_name}} '^MPI_' NQJ_}}
+#define Internal_X{{fn_name}} {{sub {{sub {{fn_name}} '^MPI_' NQJ_}} '^ompt_' NQJ_ompt_}}
 {{endforallfn}}
 
 {{forallfn fn_name MPI_Pcontrol}}
@@ -109,4 +109,5 @@ extern pnmpi_functions_statstiming_t pnmpi_totalstats_timing;
 extern timing_t pnmpi_overall_timing;
 #endif
 
+int Pompt_initialize( ompt_interface_fn_t a, const char * b, int c);
 

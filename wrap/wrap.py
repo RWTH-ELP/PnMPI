@@ -138,6 +138,8 @@ _EXTERN_C_ void PMPI_INIT_THREAD(MPI_Fint *required, MPI_Fint *provided, MPI_Fin
 _EXTERN_C_ void pmpi_init_thread_(MPI_Fint *required, MPI_Fint *provided, MPI_Fint *ierr);
 _EXTERN_C_ void pmpi_init_thread__(MPI_Fint *required, MPI_Fint *provided, MPI_Fint *ierr);
 
+typedef void (*ompt_interface_fn_t)(void);
+
 '''
 
 # Default modifiers for generated bindings
@@ -1236,6 +1238,15 @@ if len(args) < 1 and not dump_prototypes:
 for decl in enumerate_mpi_declarations(mpicc, includes):
     mpi_functions[decl.name] = decl
     if dump_prototypes: print decl
+
+ompt = Declaration("int", "ompt_initialize");
+#decl.addArgument(Param(None, None, '...', None, arg_num))
+ompt.addArgument(Param("ompt_interface_fn_t", None, "ompt_fn_lookup", None, 0))
+ompt.addArgument(Param("const char", "*", "version", None, 0))
+ompt.addArgument(Param("int", None, "ompt_version", None, 0))
+
+mpi_functions["ompt_initialize"] = ompt;
+
 
 # Fail gracefully if we didn't find anything.
 if not mpi_functions:

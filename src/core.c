@@ -835,6 +835,7 @@ void pnmpi_PreInit()
 int PNMPI_Change_Stack_Explicit(PNMPI_modHandle_t stack)
 {
   int previous = get_pnmpi_level();
-  set_pnmpi_level((int)stack);
+  if (stack > 0)
+    set_pnmpi_level((int)stack);
   return previous;
 }

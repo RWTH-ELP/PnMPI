@@ -146,6 +146,7 @@ int PNMPI_Service_GetGlobalByName(PNMPI_modHandle_t handle, const char *name,
 int PNMPI_Service_GetArgument(PNMPI_modHandle_t handle, const char *name,
                               const char **val);
 
+int PNMPI_Change_Stack_Explicit(PNMPI_modHandle_t stack);
 
 /*===============================================================*/
 /* Prototypes for PMPI routines on alternative stacks */
