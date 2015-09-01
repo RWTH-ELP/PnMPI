@@ -144,4 +144,4 @@ Boston, MA 02111-1307 USA
 }
 {{endforallfn}}
 
-int Pompt_initialize( ompt_interface_fn_t a, const char * b, int c) { return 0; }
+int Pompt_initialize( ompt_interface_fn_t a, const char * b, int c) { printf("POMPT_initialize!\n"); return 0; }

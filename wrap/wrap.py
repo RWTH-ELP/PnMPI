@@ -138,7 +138,10 @@ _EXTERN_C_ void PMPI_INIT_THREAD(MPI_Fint *required, MPI_Fint *provided, MPI_Fin
 _EXTERN_C_ void pmpi_init_thread_(MPI_Fint *required, MPI_Fint *provided, MPI_Fint *ierr);
 _EXTERN_C_ void pmpi_init_thread__(MPI_Fint *required, MPI_Fint *provided, MPI_Fint *ierr);
 
+#ifndef _OMPT_FN_T_
+#define _OMPT_FN_T_
 typedef void (*ompt_interface_fn_t)(void);
+#endif
 
 '''
 
