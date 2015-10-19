@@ -109,5 +109,5 @@ extern pnmpi_functions_statstiming_t pnmpi_totalstats_timing;
 extern timing_t pnmpi_overall_timing;
 #endif
 
-int Pompt_initialize( ompt_interface_fn_t a, const char * b, unsigned int c);
+void *Pompt_tool();
 

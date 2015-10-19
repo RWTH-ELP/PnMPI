@@ -94,7 +94,7 @@ Boston, MA 02111-1307 USA
   }
   else
     {
-	int err;
+	{{ret_type}} err;
 	#ifdef DBGLEVEL6
 	timing_t start_timer;
 	#endif
@@ -144,4 +144,4 @@ Boston, MA 02111-1307 USA
 }
 {{endforallfn}}
 
-int Pompt_initialize( ompt_interface_fn_t a, const char * b, unsigned int c) { return 1; }
+void *Pompt_tool() { return NULL; }

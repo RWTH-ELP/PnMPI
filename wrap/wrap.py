@@ -138,11 +138,6 @@ _EXTERN_C_ void PMPI_INIT_THREAD(MPI_Fint *required, MPI_Fint *provided, MPI_Fin
 _EXTERN_C_ void pmpi_init_thread_(MPI_Fint *required, MPI_Fint *provided, MPI_Fint *ierr);
 _EXTERN_C_ void pmpi_init_thread__(MPI_Fint *required, MPI_Fint *provided, MPI_Fint *ierr);
 
-#ifndef _OMPT_FN_T_
-#define _OMPT_FN_T_
-typedef void (*ompt_interface_fn_t)(void);
-#endif
-
 '''
 
 # Default modifiers for generated bindings
@@ -1242,13 +1237,9 @@ for decl in enumerate_mpi_declarations(mpicc, includes):
     mpi_functions[decl.name] = decl
     if dump_prototypes: print decl
 
-ompt = Declaration("int", "ompt_initialize");
-#decl.addArgument(Param(None, None, '...', None, arg_num))
-ompt.addArgument(Param("ompt_interface_fn_t", None, "ompt_fn_lookup", None, 0))
-ompt.addArgument(Param("const char", "*", "version", None, 0))
-ompt.addArgument(Param("int", None, "ompt_version", None, 0))
+ompt = Declaration("void *", "ompt_tool");
 
-mpi_functions["ompt_initialize"] = ompt;
+mpi_functions["ompt_tool"] = ompt;
 
 
 # Fail gracefully if we didn't find anything.
