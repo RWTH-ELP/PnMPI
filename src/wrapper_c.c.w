@@ -35,8 +35,8 @@ Boston, MA 02111-1307 USA
 
 #include "core.h"
 
-{{forallfn fn_name MPI_Pcontrol MPI_Init MPI_Init_thread MPI_Finalize}}
-{{ret_type}} {{sub {{sub {{fn_name}} '^MPI_' NQJ_}} '^ompt_' NQJ_ompt_}}({{formals}})
+{{forallfn fn_name MPI_Pcontrol MPI_Init MPI_Init_thread MPI_Finalize ompt_tool}}
+{{ret_type}} {{sub {{fn_name}} '^MPI_' NQJ_}}({{formals}})
 {
   {{ret_type}} res;
   int start_level, pnmpi_level;
@@ -83,7 +83,7 @@ Boston, MA 02111-1307 USA
 {{endforallfn}}
 
 
-{{forallfn fn_name MPI_Init MPI_Init_thread MPI_Pcontrol MPI_Finalize}}
+{{forallfn fn_name MPI_Init MPI_Init_thread MPI_Pcontrol MPI_Finalize ompt_tool}}
 {{ret_type}} {{fn_name}}({{formals}})
 {
   DBGPRINT3("Entering Old {{fn_name}} at base level - Location = %px",&({{fn_name}}));

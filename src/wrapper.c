@@ -1072,6 +1072,99 @@ void mpi_finalize_(int *ierr)
 #endif
 
 /*-------------------------------------------------------------------*/
+/* ompt_tool */
+void *NQJ_ompt_tool()
+{
+  void *res;
+  int start_level, pnmpi_level;
+
+  pnmpi_level = start_level = get_pnmpi_level();
+
+  if (IS_ACTIVATED(ompt_tool_ID))
+    {
+      while ((pnmpi_level < pnmpi_max_level) &&
+             (modules.module[pnmpi_level]->stack_delimiter == 0))
+        {
+          if (pnmpi_function_ptrs.pnmpi_int_ompt_tool[pnmpi_level] != NULL)
+            {
+#ifdef DBGLEVEL6
+              timing_t start_timer;
+#endif
+              DBGPRINT3("Calling a wrapper in ompt_tool at level %i FROM %px",
+                        pnmpi_level, &(Internal_Xompt_tool));
+#ifdef DBGLEVEL5
+              if (DBGCHECK(DBGLEVEL5))
+                modules.module[pnmpi_level]->statscount.ompt_tool++;
+#endif
+#ifdef DBGLEVEL6
+              if (DBGCHECK(DBGLEVEL6))
+                start_timer = get_time_ns();
+#endif
+              TRY
+              {
+                res = (pnmpi_function_ptrs.pnmpi_int_ompt_tool)[pnmpi_level]();
+              }
+              CATCH(exception)
+              {
+                printf("PnMPI-ERROR (%i): Calling a wrapper in ompt_tool at "
+                       "level %i FROM %px\n",
+                       exception, pnmpi_level, &(Internal_Xompt_tool));
+              }
+              ETRY
+#ifdef DBGLEVEL6
+                if (DBGCHECK(DBGLEVEL6)) modules.module[pnmpi_level]
+                  ->statstiming.ompt_tool += get_time_ns() - start_timer;
+#endif
+              DBGPRINT3(
+                "Done with wrapper in ompt_tool at level %i - reseting to %i",
+                pnmpi_level, start_level);
+              set_pnmpi_level(start_level);
+              return res;
+            }
+          pnmpi_level = inc_pnmpi_level();
+        }
+    }
+
+  DBGPRINT3("Calling a original MPI in ompt_tool");
+  res = Pompt_tool();
+  DBGPRINT3("Done with original MPI in ompt_tool");
+  set_pnmpi_level(start_level);
+  return res;
+}
+
+void *ompt_tool()
+{
+  DBGPRINT3("Entering Old ompt_tool at base level - Location = %px",
+            &(ompt_tool));
+
+  if (NOT_ACTIVATED(ompt_tool_ID))
+    {
+      return Pompt_tool();
+    }
+  else
+    {
+      void *err;
+#ifdef DBGLEVEL6
+      timing_t start_timer;
+#endif
+#ifdef DBGLEVEL5
+      if (DBGCHECK(DBGLEVEL5))
+        pnmpi_totalstats_count.ompt_tool++;
+#endif
+#ifdef DBGLEVEL6
+      if (DBGCHECK(DBGLEVEL6))
+        start_timer = get_time_ns();
+#endif
+      err = Internal_Xompt_tool();
+#ifdef DBGLEVEL6
+      if (DBGCHECK(DBGLEVEL6))
+        pnmpi_totalstats_timing.ompt_tool = get_time_ns() - start_timer;
+#endif
+      return err;
+    }
+}
+
+/*-------------------------------------------------------------------*/
 /* MPI_Pcontrol */
 
 #define TRANSTYPE doubledouble
