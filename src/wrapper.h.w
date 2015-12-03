@@ -109,5 +109,7 @@ extern pnmpi_functions_statstiming_t pnmpi_totalstats_timing;
 extern timing_t pnmpi_overall_timing;
 #endif
 
+#if defined(ompt_tool_ID)
 void *Pompt_tool();
+#endif
 

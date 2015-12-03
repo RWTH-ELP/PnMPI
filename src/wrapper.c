@@ -1071,9 +1071,11 @@ void mpi_finalize_(int *ierr)
 }
 #endif
 
-/*-------------------------------------------------------------------*/
-/* ompt_tool */
-void *NQJ_ompt_tool()
+/*-------------------------------------------------------------------*/ #
+#if defined(ompt_tool_ID)
+  /* ompt_tool */
+  void *
+  NQJ_ompt_tool()
 {
   void *res;
   int start_level, pnmpi_level;
@@ -1163,6 +1165,12 @@ void *ompt_tool()
       return err;
     }
 }
+
+void *Pompt_tool()
+{
+  return NULL;
+}
+#endif
 
 /*-------------------------------------------------------------------*/
 /* MPI_Pcontrol */
