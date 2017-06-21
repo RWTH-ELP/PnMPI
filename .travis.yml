@@ -46,7 +46,9 @@ addons:
       - openmpi-bin
       - binutils-dev
       - doxygen
+      - doxygen-latex
       - help2man
+      - texlive-fonts-recommended
 
 # Install all required packages for OS X builds. The following solution was
 # inspired by http://stackoverflow.com/a/20802381

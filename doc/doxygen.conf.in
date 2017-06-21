@@ -153,10 +153,6 @@ EXCLUDE_SYMBOLS = _GNU_SOURCE main __pad*__ args
 # standard footer.
 HTML_FOOTER = "@PROJECT_SOURCE_DIR@/doc/footer.html"
 
-# If the GENERATE_LATEX tag is set to YES, doxygen will generate LaTeX output.
-# The default value is: YES.
-GENERATE_LATEX = NO
-
 # If the GENERATE_MAN tag is set to YES, doxygen will generate man pages for
 # classes and files.
 # The default value is: NO.
