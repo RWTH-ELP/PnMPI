@@ -55,7 +55,7 @@
  *
  *
  * \hidecallergraph
- * \ingroup pnmpi_debug_io
+ * \memberof pnmpi_debug_io
  * \private
  */
 void pnmpi_print_error(const char *prefix, const char *function, const int line,

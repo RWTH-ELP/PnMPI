@@ -28,10 +28,11 @@
  * LLNL-CODE-402774
  */
 
-/** \defgroup pnmpi_debug_io Print debug messages, warnings and  errors.
+/** \class pnmpi_debug_io pnmpi/debug_io.h
  *
+ * \brief PnMPI debug message functions.
  *
- * \header{pnmpi/debug_io.h}
+ * \details Print debug messages, warnings and  errors.
  */
 
 #ifndef PNMPI_PRINT_H
@@ -44,7 +45,7 @@
 /** \brief Debug levels for \ref PNMPI_Debug.
  *
  *
- * \ingroup pnmpi_debug_io
+ * \memberof pnmpi_debug_io
  */
 typedef enum pnmpi_debug_level {
   /** \brief Messages about PnMPI initialization (before MPI is initialized).
@@ -86,7 +87,7 @@ typedef enum pnmpi_debug_level {
  * \note This macro must be set \b before including any of PnMPI's headers.
  *
  *
- * \ingroup pnmpi_debug_io
+ * \relates pnmpi_debug_io
  */
 #ifndef PNMPI_MESSAGE_PREFIX
 #define PNMPI_MESSAGE_PREFIX "PnMPI"
@@ -103,7 +104,7 @@ typedef enum pnmpi_debug_level {
  *  macro.
  *
  *
- * \ingroup pnmpi_debug_io
+ * \relates pnmpi_debug_io
  */
 #ifdef DOXYGEN
 #define PNMPI_NO_DEBUG
@@ -123,7 +124,7 @@ typedef enum pnmpi_debug_level {
  * \param ... Optional arguments to be evaluated for \p format.
  *
  *
- * \ingroup pnmpi_debug_io
+ * \relates pnmpi_debug_io
  */
 #ifdef DOXYGEN
 #define PNMPI_Debug(level, format, ...)
@@ -146,7 +147,7 @@ typedef enum pnmpi_debug_level {
  * \param ... Optional arguments to be evaluated for \p format.
  *
  *
- * \ingroup pnmpi_debug_io
+ * \relates pnmpi_debug_io
  */
 #ifdef DOXYGEN
 #define PNMPI_Warning(format, ...)
@@ -178,7 +179,7 @@ typedef enum pnmpi_debug_level {
  * \param ... Optional arguments to be evaluated for \p format.
  *
  *
- * \ingroup pnmpi_debug_io
+ * \relates pnmpi_debug_io
  */
 #ifdef DOXYGEN
 #define PNMPI_Error(format, ...)

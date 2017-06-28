@@ -51,7 +51,7 @@
  *  in the current hook.
  *
  *
- * \ingroup PNMPI_Service_CallHook
+ * \memberof PNMPI_Service_CallHook
  */
 void PNMPI_Service_CallHook(const char *hook)
 {
@@ -72,7 +72,7 @@ void PNMPI_Service_CallHook(const char *hook)
  * \param stack At which stack the hook should be called.
  *
  *
- * \ingroup PNMPI_Service_CallHook
+ * \memberof PNMPI_Service_CallHook
  */
 void PNMPI_Service_CallHook_NewStack(const char *hook, PNMPI_modHandle_t stack)
 {

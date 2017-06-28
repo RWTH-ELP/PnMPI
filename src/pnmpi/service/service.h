@@ -114,11 +114,9 @@ typedef struct PNMPI_Service_descriptor_d
 } PNMPI_Service_descriptor_t;
 /// \}
 
-/** \addtogroup PNMPI_Service_CallHook
- * \{
+/** \relates PNMPI_Service_CallHook
  */
 #define PNMPI_HOOK_SAME __FUNCTION__
-/// \}
 
 
 /* The PnMPI API should be C++ compatible, too. We have to add the extern "C"
@@ -207,12 +205,13 @@ PNMPI_status_t PNMPI_Service_GetPcontrol(const PNMPI_modHandle_t handle,
                                          int *flag);
 int PNMPI_Service_GetPcontrolSelf(void);
 
-/** \defgroup PNMPI_Service_CallHook PNMPI_Service_CallHook
+/** \class PNMPI_Service_CallHook pnmpi/service.h
  *
- * \details These functions may be used to call hooks recursively in other
- *  modules.
+ * \brief Call hooks recursively in stacks.
  *
- * \header{pnmpi/service.h}
+ * \details Hooks in PnMPI use the same recursion as MPI wrapper functions.
+ *  These functions may be used to call hooks recursively in other modules to
+ *  control where the recursion happens in your functions code.
  */
 PNMPI_FUNCTION_ARG_NONNULL(1)
 void PNMPI_Service_CallHook(const char *hook);

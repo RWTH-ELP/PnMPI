@@ -146,7 +146,7 @@ EXCLUDE_PATTERNS = */CMakeLists.txt */*.cmake \
 #
 # Note that the wildcards are matched against the file with absolute path, so to
 # exclude all test directories use the pattern */test/*
-EXCLUDE_SYMBOLS = _GNU_SOURCE main __pad*__ args
+EXCLUDE_SYMBOLS = _GNU_SOURCE main __pad*__ args XMPI_* NQJ_* PMPI_*
 
 # The HTML_FOOTER tag can be used to specify a personal HTML footer for
 # each generated HTML page. If it is left blank doxygen will generate a
@@ -213,6 +213,14 @@ PREDEFINED = DOXYGEN COMPILE_FOR_FORTRAN ENABLE_FORTRAN         \
 # set to NO
 # The default value is: NO.
 HAVE_DOT = @DOXYGEN_DOT_FOUND@
+
+# If the INCLUDE_GRAPH, ENABLE_PREPROCESSING and SEARCH_INCLUDES tags are set to
+# YES then doxygen will generate a graph for each documented file showing the
+# direct and indirect include dependencies of the file with other documented
+# files.
+# The default value is: YES.
+# This tag requires that the tag HAVE_DOT is set to YES.
+INCLUDE_GRAPH = @DOXYGEN_DOC_INTERNAL@
 
 # If the INCLUDED_BY_GRAPH, ENABLE_PREPROCESSING and SEARCH_INCLUDES tags are
 # set to YES then doxygen will generate a graph for each documented file showing
