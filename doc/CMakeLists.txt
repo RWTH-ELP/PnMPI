@@ -72,6 +72,12 @@ if (BUILD_DOC)
                      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                      MAIN_DEPENDENCY ${PNMPI_DOXYFILE}
                      DEPENDS
+                       html/footer.html
+                       latex/header.tex latex/footer.tex
+
+                       # A list of all targets that contain data for Doxygen.
+                       # This will trigger a rebuild of the documentation, if
+                       # any of the targets changes.
                        pnmpi
                        pnmpize
                        commsub-empty commsub-print

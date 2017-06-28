@@ -28,7 +28,7 @@
 # LLNL-CODE-402774
 
 cmake_minimum_required(VERSION 2.8.11.2)
-project(pnmpi C CXX)
+project(PnMPI C CXX)
 
 
 # Otional Fortran support.
