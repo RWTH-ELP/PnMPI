@@ -96,7 +96,6 @@ install(FILES
 
 pnmpi_add_private_header(config.h.in config.h)
 pnmpi_add_private_header(force_link.h)
-pnmpi_add_private_header(initialization.h)
 
 
 if (ENABLE_FORTRAN)
@@ -129,9 +128,6 @@ endif()
 #       containing a constructor must be listed in the order they should be
 #       executed.
 set(PNMPI_LIB_SOURCES
-  initialize.c
-  finalize.c
-
   core.c
   wrapper.c
   print_banner.c

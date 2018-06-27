@@ -49,11 +49,19 @@ check_c_source_compiles("
 pnmpi_add_private_header(mpi_interface.h)
 pnmpi_add_private_header(mpi_reentry.h)
 pnmpi_add_private_header(return_address.h.in return_address.h)
+pnmpi_add_header(wrapper.h)
 
 easy_add_library(pnmpi_wrapper OBJECT
+  init.c
+  finalize.c
+
   mpi_interface.c
   mpi_reentry.c
   return_address.c)
+
+foreach (target pnmpi_wrapper pnmpi_wrapper_pic)
+  add_dependencies(${target} generate)
+endforeach ()
 
 add_coverage(pnmpi_wrapper_pic)
 add_sanitizers(pnmpi_wrapper_pic)

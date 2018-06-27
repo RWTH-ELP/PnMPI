@@ -29,21 +29,30 @@
  */
 
 #include <pnmpi/private/attributes.h>
-#include <pnmpi/private/initialization.h>
 #include <pnmpi/private/modules.h>
+#include <pnmpi/wrapper.h>
 
 
-/** \brief Finalize PnMPI.
+/* As this variable is used for the init- and finalization only, this variable
+ * is declared as extern inside this file instead of using a separate header
+ * file. The definition of this variable can be found along with the PnMPI_Init
+ * function. */
+extern int pnmpi_initialized;
+
+
+/**
+ * Finalize PnMPI.
  *
- * \note This function must be called as many times as \ref pnmpi_initialize.
+ * In contrast to @ref PnMPI_Init, this function finalizes the PnMPI
+ * infrastructure, unloads the modules and wrappers and frees internal memory.
+ * All wrappers should call this function in the finalization function of the
+ * wrapped library (like `MPI_Finalize` or MPI).
  *
- * \warning PnMPI API functions **MUST NOT** be used after calling this
- * function.
- *
- *
- * \private
+ * @note If multiple wrappers are used, only the last call of this function will
+ *       finalize PnMPI. Therefore, wrappers must not assume the PnMPI
+ *       infrastructure is destroyed after calling this function.
  */
-void pnmpi_finalize(void)
+void PnMPI_Finalize(void)
 {
   /* Ignore any call to this function except the last call. This will be
    * achieved by decreasing the initialization counter. If it's zero after
@@ -59,17 +68,28 @@ void pnmpi_finalize(void)
 
 
 #ifdef __GNUC__
-/** \brief The PnMPI destructor.
+/**
+ * The PnMPI destructor.
  *
- * \details If the compiler supports destructors, finalize PnMPI in the
- *  destructor, just before the application finishes.
+ * If the compiler supports destructors, finalize PnMPI in the destructor, just
+ * before the application finishes (after `main()` returned).
+ *
+ * @note This feature is fully optional. If the destructor is not compiled or
+ *       not included by the linker for any reason, PnMPI is still operating
+ *       fully functional, but will be finalized by the last wrapper calling
+ *       @ref PnMPI_Finalize instead.
+ *
+ * @warning If for any reason @ref pnmpi_constructor is called, but this
+ *          function isn't, PnMPI won't finalize itself, all loaded wrappers and
+ *          modules. However, this shouldn't happen with the tested compilers.
+ *          Please file an issue if you notice any errors.
  *
  *
- * \private
+ * @private
  */
 PNMPI_INTERNAL
 __attribute__((destructor)) void pnmpi_destructor(void)
 {
-  pnmpi_finalize();
+  PnMPI_Finalize();
 }
 #endif

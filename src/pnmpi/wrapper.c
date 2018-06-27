@@ -35,7 +35,6 @@
 #include <mpi.h>
 #include <pnmpi/debug_io.h>
 #include <pnmpi/private/force_link.h>
-#include <pnmpi/private/initialization.h>
 #include <pnmpi/private/modules.h>
 #include <pnmpi/private/mpi_interface.h>
 #include <pnmpi/private/mpi_reentry.h>
@@ -43,6 +42,7 @@
 #include <pnmpi/private/pmpi_assert.h>
 #include <pnmpi/private/return_address.h>
 #include <pnmpi/private/tls.h>
+#include <pnmpi/wrapper.h>
 
 /* Special wrappers not covered by the generator */
 #ifdef EXPERIMENTAL_UNWIND
@@ -88,7 +88,7 @@ static int PNMPI_Common_MPI_Init(int *_pnmpi_arg_0, char ***_pnmpi_arg_1)
    *
    * Note: Duplicated calls to the initialization function will be ignored, so
    *       this doesn't need to be checked. */
-  pnmpi_initialize();
+  PnMPI_Init();
 
 
   int returnVal = MPI_SUCCESS;
@@ -355,7 +355,7 @@ static int PNMPI_Common_MPI_Init_thread(int *_pnmpi_arg_0, char ***_pnmpi_arg_1,
    *
    * Note: Duplicated calls to the initialization function will be ignored, so
    *       this doesn't need to be checked. */
-  pnmpi_initialize();
+  PnMPI_Init();
 
 
 #ifdef PNMPI_COMPILER_NO_TLS
@@ -678,7 +678,7 @@ int MPI_Finalize(void)
    *
    * Note: Duplicated calls to the finalization function will be ignored, so
    *       this doesn't need to be checked. */
-  pnmpi_finalize();
+  PnMPI_Finalize();
 
 
   /* Exit the reentry-guarded wrapper section, reset the return address of this

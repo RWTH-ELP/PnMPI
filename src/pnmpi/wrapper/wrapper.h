@@ -1,9 +1,9 @@
 /* This file is part of P^nMPI.
  *
  * Copyright (c)
- *  2008-2018 Lawrence Livermore National Laboratories, United States of America
- *  2011-2016 ZIH, Technische Universitaet Dresden, Federal Republic of Germany
- *  2013-2018 RWTH Aachen University, Federal Republic of Germany
+ *  2008-2017 Lawrence Livermore National Laboratories, United States of America
+ *  2011-2017 ZIH, Technische Universitaet Dresden, Federal Republic of Germany
+ *  2013-2017 RWTH Aachen University, Federal Republic of Germany
  *
  *
  * P^nMPI is free software; you can redistribute it and/or modify it under the
@@ -28,14 +28,16 @@
  * LLNL-CODE-402774
  */
 
-#ifndef PNMPI_PRIVATE_INITIALIZATION_H
-#define PNMPI_PRIVATE_INITIALIZATION_H
+/* This file defines the interface for PnMPI wrappers. It includes all functions
+ * that are needed by a PnMPI wrapper module to initialize and exchange data
+ * with PnMPI. */
+
+#ifndef PNMPI_WRAPPER_H
+#define PNMPI_WRAPPER_H
 
 
-extern int pnmpi_initialized;
-
-void pnmpi_initialize(void);
-void pnmpi_finalize(void);
+void PnMPI_Init(void);
+void PnMPI_Finalize(void);
 
 
 #endif

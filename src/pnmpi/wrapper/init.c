@@ -30,35 +30,37 @@
 
 #include "core.h"
 #include <pnmpi/private/attributes.h>
-#include <pnmpi/private/initialization.h>
+#include <pnmpi/wrapper.h>
 
-
-/** \brief Global counter for number of initializations.
+/**
+ * Global counter for number of initializations.
  *
- * \details This counter will be increased on any call to the initialization
- *  functions and decreased on finalization. It ensures PnMPI is initialized
- *  only once and finalized in the last finalization call.
+ * This counter will be increased on any call to the initialization functions
+ * and decreased on finalization. It ensures PnMPI is initialized only once and
+ * finalized in the last finalization call.
  *
  *
- * \private
+ * @private
  */
 PNMPI_INTERNAL
 int pnmpi_initialized = 0;
 
 
-/** \brief Initialize PnMPI.
+/**
+ * Initialize PnMPI.
  *
- * \note This function must be called before using any of PnMPI's API functions.
+ * This function initializes PnMPI, if it isn't already. All wrappers should
+ * call this function in their entry point function (i.e. the function of the
+ * wrapped library applications should call first like `MPI_Init` for MPI).
  *
- *
- * \private
+ * @note This function must be called before using any of PnMPI's functions.
  */
-PNMPI_INTERNAL
-void pnmpi_initialize(void)
+void PnMPI_Init(void)
 {
-  /* If PnMPI is already initialize, do not initialize it a second time. A
-   * counter will be increased to be save how often the initialization has been
-   * called, to be used later in the finalization. */
+  /* If PnMPI is already initialized, do not initialize it twice. In addition,
+   * an internal counter tracks, how often the this function is called, so PnMPI
+   * (especially its finalization function) know, how many wrappers of PnMPI are
+   * active. */
   if (pnmpi_initialized++)
     return;
 
@@ -69,22 +71,27 @@ void pnmpi_initialize(void)
 
 
 #ifdef __GNUC__
-/** \brief The PnMPI constructor.
+/**
+ * The PnMPI constructor.
  *
- * \details If the compiler supports constructors, initialize PnMPI this early,
- *  so PnMPI is ready to be used, when `main()` gets called.
+ * If the compiler supports constructors, initialize PnMPI this early, so PnMPI
+ * is ready to be used when the application's `main()` is executed.
+ *
+ * @note This feature is fully optional. If the constructor is not compiled or
+ *       not included by the linker for any reason, PnMPI is still operating
+ *       fully functional, but will be initialized at the time of first use.
  *
  *
- * \param argc Count of \p argv.
- * \param argv The argument vector of the executable.
+ * @param argc Count of `argv`.
+ * @param argv The argument vector of the running executable.
  *
  *
- * \private
+ * @private
  */
 PNMPI_INTERNAL
 __attribute__((constructor)) void pnmpi_constructor(PNMPI_UNUSED int argc,
                                                     PNMPI_UNUSED char **argv)
 {
-  pnmpi_initialize();
+  PnMPI_Init();
 }
 #endif
