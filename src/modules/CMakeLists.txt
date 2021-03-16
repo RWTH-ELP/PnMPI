@@ -27,6 +27,16 @@
 #
 # LLNL-CODE-402774
 
+# Use a common path where the PnMPI modules get installed. Modules should use
+# this variable instead of hardcoding a path. Similar modules may be grouped
+# in subdirectories.
+#
+# NOTE: The FORCE parameter is required, so the path gets regenerated, if the
+#       CMAKE_INSTALL_PREFIX changes.
+set(PnMPI_MODULES_DIR "${CMAKE_INSTALL_FULL_LIBDIR}/pnmpi-modules"
+                      CACHE PATH "PnMPI module install path" FORCE)
+
+
 # Modules will be built by default. However, one may disable building the
 # modules, e.g. if only the PnMPI infrastructure is required.
 option(ENABLE_MODULES "Selects whether PnMPI modules are built." TRUE)
@@ -64,15 +74,6 @@ macro(pnmpi_add_xmpi_module TARGET)
   add_sanitizers(${TARGET})
 endmacro()
 
-
-# Use a common path where the PnMPI modules get installed. Modules should use
-# this variable instead of hardcoding a path. Similar modules may be grouped
-# in subdirectories.
-#
-# NOTE: The FORCE parameter is required, so the path gets regenerated, if the
-#       CMAKE_INSTALL_PREFIX changes.
-set(PnMPI_MODULES_DIR "${CMAKE_INSTALL_FULL_LIBDIR}/pnmpi-modules"
-                      CACHE PATH "PnMPI module install path" FORCE)
 
 
 # Include directories for all modules.
