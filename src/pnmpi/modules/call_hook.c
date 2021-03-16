@@ -28,6 +28,7 @@
  * LLNL-CODE-402774
  */
 
+#include <mpi.h>
 #include <assert.h>
 
 #include "core.h"
