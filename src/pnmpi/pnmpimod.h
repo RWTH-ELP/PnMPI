@@ -63,6 +63,7 @@
 /*.......................................................*/
 /* Constants */
 
+#define PNMPI_MODULE_PATHNAMELEN 4096
 #define PNMPI_MODULE_FILENAMELEN 512
 #define PNMPI_MODULE_USERNAMELEN 256
 

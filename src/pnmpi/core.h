@@ -68,6 +68,7 @@
 
 
 typedef char module_name_t[PNMPI_MODULE_FILENAMELEN];
+typedef char module_path_t[PNMPI_MODULE_PATHNAMELEN];
 
 typedef struct module_servlist_d *module_servlist_p;
 typedef struct module_servlist_d

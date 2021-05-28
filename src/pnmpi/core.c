@@ -147,7 +147,7 @@ static int find_module(const char *lib_name, path_array_t library_path,
                        void **handle, char *mod_path)
 {
   path_array_t path;
-  module_name_t location;
+  module_path_t location;
   dlerror();
 
   if (!library_path)
@@ -159,7 +159,7 @@ static int find_module(const char *lib_name, path_array_t library_path,
 
   for (path = library_path; *path; path++)
     {
-      snprintf(location, PNMPI_MODULE_FILENAMELEN, "%s/%s", *path, lib_name);
+      snprintf(location, PNMPI_MODULE_PATHNAMELEN, "%s/%s", *path, lib_name);
       if (access(location, R_OK) != -1)
         {
           *handle = dlopen(location, RTLD_LAZY);
@@ -212,7 +212,8 @@ void pnmpi_PreInit(void)
 {
   path_array_t library_path;
   char *lib_path_string, *confdir;
-  module_name_t filename, modname;
+  module_path_t filename;
+  module_name_t modname;
   FILE *conffile = NULL;
   char line[MAX_LINE], c, lastc;
   int pos;
@@ -311,7 +312,7 @@ void pnmpi_PreInit(void)
           return;
         }
 
-      snprintf(filename, PNMPI_MODULE_FILENAMELEN, "%s/%s", confdir, CONFNAME);
+      snprintf(filename, PNMPI_MODULE_PATHNAMELEN, "%s/%s", confdir, CONFNAME);
       free(confdir);
       conffile = fopen(filename, "r");
       if (conffile == NULL)
@@ -346,7 +347,7 @@ void pnmpi_PreInit(void)
           return;
         }
 
-      snprintf(filename, PNMPI_MODULE_FILENAMELEN, "%s/%s", confdir, CONFNAME);
+      snprintf(filename, PNMPI_MODULE_PATHNAMELEN, "%s/%s", confdir, CONFNAME);
       conffile = fopen(filename, "r");
       if (conffile == NULL)
         {
@@ -510,7 +511,7 @@ void pnmpi_PreInit(void)
                   /* now we have space and can store the information */
 
                   DBGPRINT2("Found stack %i: %s", modules.num + 1, cmdargv[1]);
-                  if (strlen(cmdargv[1]) >= PNMPI_MODULE_FILENAMELEN)
+                  if (strlen(cmdargv[1]) >= PNMPI_MODULE_FILENAMELEN - 5)
                     {
                       WARNPRINT("Stack name too long - shortening it");
                     }
@@ -569,7 +570,7 @@ void pnmpi_PreInit(void)
                   /* now we have space and can store the information */
 
                   DBGPRINT2("Found module %i: %s", modules.num + 1, cmdargv[1]);
-                  if (strlen(cmdargv[1]) >= PNMPI_MODULE_FILENAMELEN)
+                  if (strlen(cmdargv[1]) >= PNMPI_MODULE_FILENAMELEN - 5)
                     {
                       WARNPRINT("Module name too long - shortening it");
                     }
